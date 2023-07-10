@@ -1,0 +1,38 @@
+﻿@model IEnumerable<IS_Domasna.Domain.DomainModels.Ticket>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+    <a asp-controller="Tickets" asp-action="ExportAllTickets" class="btn btn-warning">Export tickets</a>
+</p>
+
+<div class="container d-flex justify-content-center">
+@foreach (var item in Model) {
+    <div class="card m-4" style="width: 18rem;">
+        <img src="@item.MovieImage" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">@item.MovieTitle</h5>
+            <p class="card-text">@item.MovieDescription</p>
+            <p class="card-text">$@item.Price</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" class="btn btn-outline-secondary" asp-route-id="@item.Id">Edit</a>
+                <form method="post" asp-action="Delete" class="d-inline-block" asp-route-id="@item.Id">
+                    <button type="submit" class="btn btn-outline-danger">Delete</button>
+                </form>
+            }
+            <div>
+                <a asp-controller="Tickets" asp-action="AddTicketToCart" asp-route-id="@item.Id" class="btn btn-info">Add to cart</a>
+            </div>
+        </div>
+    </div>
+	
+
+}
+</div>
